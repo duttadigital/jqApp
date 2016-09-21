@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Lightweight-JSONP Example</title>
+		<script src="http://dutta4u.p4o.net/jqm/jsonp.js"></script>
+	</head>
+	<body>
+		<table  border=3 id="example"></table>
+		<script>
+			JSONP.init({
+				error: function(ex){
+					alert("Failed to load : " + ex.url);
+				}
+			});
+		
+			JSONP.get('http://dutta4u.p4o.net/jqm/api.php', {param1:'123'}, function(data) {
+				var example = document.getElementById('example'),
+					item = null, li = null;
+					
+				if ( data && data.length > 0 ) {
+					for ( var i in data ) {
+						if ( data.hasOwnProperty(i) ) {
+							item = data[i];
+							tr = document.createElement('tr');
+							tr.innerHTML = "<td><b>"+item.c_id+"</td><td><h3>"+item.c_name+"</h3></td><td><p>"+item.c_text+"</p></td>";
+							example.appendChild(tr);
+						}
+					}				
+				}
+			});
+			
+			//Uncomment the following call will trigger the error callback and alert the failing url.
+			//JSONP.get('not-existing-url');
+		</script>
+	</body>
+</html>
